@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+<p th:text="${person.getUsername()}" style="font-family: Arial; font-weight: bold; font-size: 18px;
+color: red"></p>
+
+<br/>
+<br/>
+
+<div class="comment" id="comment-list">
+    <div th:each="comment : ${comments}" data-th-id="${comment.getCommentId()}">
+        <p th:text="${comment.getPerson().getUsername() + ', ' + comment.getPostDateAndTime()}"
+           style="font-family: Arial; font-weight: bold"></p>
+        <p th:text="${comment.getCommentText()}" style="font-family: Arial; font-weight: normal"></p>
+        <br/>
+    </div>
+</div>
+
+
+<form th:method="POST" th:action="@{/blog}" th:object="${comment}">
+    <textarea th:field="*{commentText}" rows="5" cols="50" style="font-family: Arial; font-weight: normal"></textarea>
+    <div style="color: red; font-family: Arial; font-weight: normal"
+         th:if="${#fields.hasErrors('commentText')}" th:errors="*{commentText}"></div>
+    <input type="submit" value="Post comment!"/>
+</form>
+
+
+<br/>
+
+
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Выйти"/>
+</form>
+
+</body>
+</html>
